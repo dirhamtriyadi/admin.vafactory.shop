@@ -247,7 +247,7 @@ const Table: React.FC<TableProps> = ({ data, columns, actions = [] }) => {
         </div>
       </div>
 
-      <div className="mt-4 flex justify-between items-center">
+      <div className="mt-4 flex flex-wrap gap-1 justify-between items-center">
         <button
           onClick={() => handlePageChange(currentPage - 1)}
           disabled={currentPage === 1}
