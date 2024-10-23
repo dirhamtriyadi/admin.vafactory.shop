@@ -1,8 +1,15 @@
-import { configureStore } from "@reduxjs/toolkit";
+import { configureStore, Tuple } from "@reduxjs/toolkit";
 import { rootReducer } from "./reducers";
+import { thunk } from "redux-thunk";
+import { createLogger } from "redux-logger";
+
+const logger = createLogger({
+    collapsed: true,
+});
 
 const store = configureStore({
     reducer: rootReducer,
+    middleware: () => new Tuple(thunk, logger),
 });
 
 export default store;
