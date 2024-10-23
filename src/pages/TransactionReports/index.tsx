@@ -1,5 +1,5 @@
 import Breadcrumb from "../../components/Breadcrumbs/Breadcrumb";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { getDataTransactionReport } from "../../store/actions/transactionReportAction";
 import { ThunkDispatch } from "redux-thunk";
 import { getDataTransactionReports } from "../../store/selectors";
@@ -9,9 +9,16 @@ import Table from "../../components/Tables/Table";
 const TransactionReports = () => {
   const dispatch: ThunkDispatch<any, any, any> = useDispatch();
   const data = useSelector(getDataTransactionReports);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    dispatch(getDataTransactionReport());
+    const fetchData = async () => {
+      setLoading(true);
+      await dispatch(getDataTransactionReport());
+      setLoading(false);
+    }
+
+    fetchData();
   }, [dispatch]);
 
   const columns = [
@@ -59,7 +66,13 @@ const TransactionReports = () => {
     <>
       <Breadcrumb pageName="Transaction Reports" />
 
-      <Table data={tempData} columns={columns} actions={actions} />
+      {loading ? (
+        <div className="flex justify-center items-center h-64">
+          <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-blue-500"></div>
+        </div>
+      ) : (
+        <Table data={tempData} columns={columns} actions={actions} />
+      )}
     </>
   );
 };
