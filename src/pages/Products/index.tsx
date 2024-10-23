@@ -5,6 +5,7 @@ import { ThunkDispatch } from "redux-thunk";
 import { getDataProducts } from "../../store/selectors";
 import { useDispatch, useSelector } from "react-redux";
 import Table from "../../components/Tables/Table";
+import LoadingTable from "../../common/LoadingTable";
 
 const Products = () => {
   const dispatch: ThunkDispatch<any, any, any> = useDispatch();
@@ -63,9 +64,7 @@ const Products = () => {
       <Breadcrumb pageName="Produk" />
 
       {loading ? (
-        <div className="flex justify-center items-center h-64">
-          <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-blue-500"></div>
-        </div>
+        <LoadingTable />
       ) : (
         <Table data={tempData} columns={columns} actions={actions} />
       )}
